@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulateur de moyenne | Pierre Dunand-Chatellet</title>
+<meta name="description" content="Calcule ta moyenne pondérée du bac et la note qu'il te reste à obtenir pour atteindre ton objectif.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <span class="topbar-title">Simulateur de moyenne</span>
+</header>
+
+<main class="layout">
+
+  <section class="col-main" aria-labelledby="h-matieres">
+    <div class="section-head">
+      <h1 id="h-matieres">Tes matières</h1>
+      <p class="lede">Renseigne une note sur 20 et un coefficient par matière. Coche « à venir » pour les épreuves que tu n'as pas encore passées.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table id="rows">
+        <thead>
+          <tr>
+            <th scope="col" class="c-name">Matière</th>
+            <th scope="col" class="c-num">Coef</th>
+            <th scope="col" class="c-num">Note /20</th>
+            <th scope="col" class="c-flag">À venir</th>
+            <th scope="col" class="c-del"><span class="sr-only">Supprimer</span></th>
+          </tr>
+        </thead>
+        <tbody id="rows-body"></tbody>
+      </table>
+
+      <p class="empty" id="empty-state" hidden>
+        Aucune matière pour l'instant.<br>
+        Ajoute-les une par une, ou charge la grille officielle du bac 2026 plus bas.
+      </p>
+    </div>
+
+    <div class="row-actions">
+      <button id="add-row" class="btn">Ajouter une matière</button>
+      <button id="clear-all" class="btn btn-quiet">Tout effacer</button>
+    </div>
+  </section>
+
+  <aside class="col-side">
+    <div class="card readout">
+      <p class="card-label">Moyenne actuelle</p>
+      <p class="readout-value is-empty" id="average" aria-live="polite">0,00</p>
+      <p class="readout-meta" id="average-meta">Aucune note saisie</p>
+      <p class="mention" id="mention" hidden></p>
+    </div>
+
+    <div class="card">
+      <label class="field-label" for="target">Objectif de moyenne</label>
+      <div class="field-row">
+        <input type="number" id="target" step="0.1" min="0" max="20" inputmode="decimal">
+        <button id="solve" class="btn btn-primary">Calculer</button>
+      </div>
+      <p class="field-help">Sur 20. Le calcul suppose que les matières cochées « à venir » ont toutes la même note.</p>
+      <p class="field-result" id="target-result" role="status"></p>
+    </div>
+  </aside>
+
+  <section class="col-full" aria-labelledby="h-coef">
+    <div class="section-head">
+      <h2 id="h-coef">Coefficients du bac 2027</h2>
+      <p class="lede">Voie générale, sur un total de <span id="coef-total-all">100</span>. Vérifie auprès de ton lycée si tu as des options ou un parcours particulier.</p>
+    </div>
+
+    <div class="coef-groups">
+      <div class="coef-group">
+        <div class="coef-group-head">
+          <h3>Épreuves finales</h3>
+          <span class="coef-total" id="total-finales">60</span>
+        </div>
+        <ul class="coef-list" id="coef-finales"></ul>
+      </div>
+
+      <div class="coef-group">
+        <div class="coef-group-head">
+          <h3>Contrôle continu</h3>
+          <span class="coef-total" id="total-continu">40</span>
+        </div>
+        <ul class="coef-list" id="coef-continu"></ul>
+      </div>
+    </div>
+
+    <div class="coef-actions">
+      <button id="prefill" class="btn btn-primary">Charger cette grille dans le tableau</button>
+      <p class="field-help">Remplace les matières actuelles. Les options facultatives comptent coefficient 2 chacune, en plus des 100.</p>
+    </div>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
