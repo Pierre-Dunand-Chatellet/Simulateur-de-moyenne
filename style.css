@@ -424,3 +424,10 @@ input[type="checkbox"] {
   * { transition: none !important; animation: none !important; }
   .btn:active, .del-btn:active { transform: none; }
 }
+
+/* Focus clavier : un contour visible sur tout ce qu'on atteint avec Tab.
+   :focus-visible ne s'affiche pas au clic souris, seulement au clavier. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
