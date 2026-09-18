@@ -3,7 +3,7 @@
 Outil web qui calcule une moyenne pondérée et répond à la question inverse :
 « il me faut combien sur les épreuves qui restent pour avoir la mention ? »
 
-En ligne : http://site-254.studio2.serveur-dedie.fr/simulateur/
+En ligne : https://dunandchatellet.fr/simulateur/
 
 ## Ce que ça fait
 
