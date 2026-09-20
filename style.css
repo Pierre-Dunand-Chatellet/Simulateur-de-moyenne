@@ -184,6 +184,92 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
+/* Curseurs (note et écart). La partie remplie de la piste vient de --fill,
+   posée en JS ; Firefox utilise ::-moz-range-progress à la place. */
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  --fill: 0%;
+  width: 110px;
+  height: 32px; /* zone cliquable plus haute que la piste */
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(to right, var(--accent) var(--fill), var(--line-strong) var(--fill));
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: -7px; /* centre le curseur sur la piste de 4px */
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+input[type="range"]::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--line-strong);
+}
+input[type="range"]::-moz-range-progress {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+input[type="range"]:focus-visible { box-shadow: none; }
+
+/* Note pas encore saisie : curseur creux au milieu, piste vide */
+input[type="range"].is-unset::-webkit-slider-thumb { background: var(--surface); box-shadow: 0 0 0 1.5px var(--text-soft); }
+input[type="range"].is-unset::-moz-range-thumb { background: var(--surface); box-shadow: 0 0 0 1.5px var(--text-soft); }
+input[type="range"].is-unset::-moz-range-progress { background: transparent; }
+
+input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.note-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Bouton ★ : matière à privilégier, seulement sur les lignes « à venir » */
+.star-btn {
+  width: 28px;
+  height: 28px;
+  margin-left: 6px;
+  vertical-align: middle;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: none;
+  color: var(--line-strong);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+.star-btn:hover { color: var(--text-soft); border-color: var(--text-soft); }
+.star-btn[aria-pressed="true"] {
+  color: var(--accent-text);
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+.star-btn:active { transform: scale(0.94); }
+.c-flag input[type="checkbox"] { vertical-align: middle; }
+
 .del-btn {
   width: 28px;
   height: 28px;
@@ -237,7 +323,11 @@ input[type="checkbox"] {
 
 /* Side column */
 
-.col-side {
+/* La colonne s'étire sur la hauteur du tableau et c'est son contenu qui
+   reste collé : il s'arrête ainsi à la fin du tableau au lieu de glisser
+   par-dessus la grille des coefficients (le sticky prenait toute la page). */
+.col-side { align-self: stretch; }
+.side-sticky {
   position: sticky;
   top: 24px;
   display: grid;
@@ -298,13 +388,34 @@ input[type="checkbox"] {
   gap: 8px;
 }
 .field-row input { width: 92px; flex: 0 0 auto; }
-.field-row .btn { flex: 1; }
+.field-unit {
+  align-self: center;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 13px;
+  color: var(--text-soft);
+}
 
 .field-help {
   margin: 8px 0 0;
   font-size: 12.5px;
   color: var(--text-soft);
 }
+
+.ecart-field { margin-top: 16px; }
+.ecart-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.ecart-head .field-label { margin-bottom: 0; }
+.ecart-value {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-text);
+}
+.ecart-field input[type="range"] { width: 100%; }
 
 .field-result {
   margin: 10px 0 0;
@@ -385,28 +496,36 @@ input[type="checkbox"] {
     gap: 32px;
     padding: 28px 16px 72px;
   }
-  .col-side { position: static; }
+  .side-sticky { position: static; }
   .coef-groups { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 560px) {
   thead { display: none; }
+  /* Carte par matière : nom, puis coef + « à venir », puis la note
+     avec son curseur sur toute la largeur (plus facile au pouce). */
   tbody tr {
     display: grid;
-    grid-template-columns: 1fr auto auto auto;
+    grid-template-columns: auto 1fr auto;
     grid-template-areas:
-      "name name name del"
-      "coef note flag flag";
-    gap: 8px;
+      "name name del"
+      "coef flag flag"
+      "note note note";
+    gap: 10px 12px;
     padding: 12px 10px;
     border-bottom: 1px solid var(--line);
   }
   tbody td { padding: 0; border: 0; }
   tbody td.c-name { grid-area: name; }
   tbody td.c-coef { grid-area: coef; }
-  tbody td.c-note { grid-area: note; }
-  tbody td.c-flag { grid-area: flag; display: flex; align-items: center; gap: 6px; }
+  tbody td.c-note { grid-area: note; text-align: left; }
+  tbody td.c-flag { grid-area: flag; display: flex; align-items: center; gap: 6px; align-self: end; min-height: 36px; }
   tbody td.c-del { grid-area: del; text-align: right; }
+  .note-field { gap: 14px; }
+  .note-field .f-note-range { flex: 1; width: auto; height: 40px; }
+  .f-note-range::-webkit-slider-thumb { width: 24px; height: 24px; margin-top: -10px; }
+  .f-note-range::-moz-range-thumb { width: 20px; height: 20px; }
+  .star-btn { width: 36px; height: 36px; margin-left: 4px; }
   .cell-label {
     font-size: 12px;
     color: var(--text-soft);
@@ -422,7 +541,7 @@ input[type="checkbox"] {
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
-  .btn:active, .del-btn:active { transform: none; }
+  .btn:active, .del-btn:active, .star-btn:active { transform: none; }
 }
 
 /* Focus clavier : un contour visible sur tout ce qu'on atteint avec Tab.
