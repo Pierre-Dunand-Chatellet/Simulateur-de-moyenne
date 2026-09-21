@@ -1,5 +1,7 @@
 # Simulateur de moyenne du bac
 
+![Aperçu du projet](apercu.jpg)
+
 Outil web qui calcule une moyenne pondérée et répond à la question inverse :
 « il me faut combien sur les épreuves qui restent pour avoir la mention ? »
 
