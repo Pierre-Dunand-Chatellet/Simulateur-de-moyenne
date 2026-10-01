@@ -1,127 +1,140 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Simulateur de moyenne | Pierre Dunand-Chatellet</title>
-<meta name="description" content="Calcule ta moyenne pondérée du bac et la note qu'il te reste à obtenir pour atteindre ton objectif.">
-<link rel="canonical" href="https://dunandchatellet.fr/simulateur/">
-<meta name="theme-color" content="#f2f3f5" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#14161a" media="(prefers-color-scheme: dark)">
-<link rel="icon" type="image/webp" href="../image/Logo.webp">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Simulateur de moyenne | Pierre Dunand-Chatellet">
-<meta property="og:description" content="Calcule ta moyenne pondérée du bac et la note qu'il te reste à obtenir pour atteindre ton objectif.">
-<meta property="og:url" content="https://dunandchatellet.fr/simulateur/">
-<meta property="og:image" content="https://dunandchatellet.fr/simulateur/apercu.jpg">
-<link rel="stylesheet" href="fonts/fonts.css">
-<link rel="stylesheet" href="style.css?v=20261001-1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulateur de moyenne | Pierre Dunand-Chatellet</title>
+  <meta name="description"
+    content="Calcule ta moyenne pondérée du bac et la note qu'il te reste à obtenir pour atteindre ton objectif.">
+  <link rel="canonical" href="https://dunandchatellet.fr/simulateur/">
+  <meta name="theme-color" content="#e7e2d7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#100e0c" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/svg+xml" href="../image/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../image/favicon-32.png">
+  <link rel="apple-touch-icon" href="../image/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Simulateur de moyenne | Pierre Dunand-Chatellet">
+  <meta property="og:description" content="Calcule ta moyenne pondérée du bac et la note qu'il te reste à obtenir pour atteindre ton objectif.">
+  <meta property="og:url" content="https://dunandchatellet.fr/simulateur/">
+  <meta property="og:image" content="https://dunandchatellet.fr/simulateur/apercu.jpg">
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="style.css?v=20261001-2">
 </head>
+
 <body>
 
-<header class="topbar">
-  <span class="topbar-title">Simulateur de moyenne</span>
-</header>
+  <header class="topbar">
+    <a class="brand" href="https://dunandchatellet.fr/" aria-label="Pierre D—C., retour au portfolio">
+      <img src="../image/favicon.svg" width="30" height="30" alt="">
+    </a>
+    <span class="topbar-title">Simulateur de moyenne</span>
+  </header>
 
-<main class="layout">
+  <main class="layout">
 
-  <section class="col-main" aria-labelledby="h-matieres">
-    <div class="section-head">
-      <h1 id="h-matieres">Tes matières</h1>
-      <p class="lede">Renseigne une note sur 20 et un coefficient par matière. Coche « à venir » pour les épreuves que tu n'as pas encore passées.</p>
-    </div>
-
-    <div class="table-wrap">
-      <table id="rows">
-        <thead>
-          <tr>
-            <th scope="col" class="c-name">Matière</th>
-            <th scope="col" class="c-num">Coef</th>
-            <th scope="col" class="c-num">Note /20</th>
-            <th scope="col" class="c-flag">À venir</th>
-            <th scope="col" class="c-del"><span class="sr-only">Supprimer</span></th>
-          </tr>
-        </thead>
-        <tbody id="rows-body"></tbody>
-      </table>
-
-      <p class="empty" id="empty-state" hidden>
-        Aucune matière pour l'instant.<br>
-        Ajoute-les une par une, ou charge la grille officielle du bac 2027 plus bas.
-      </p>
-    </div>
-
-    <div class="row-actions">
-      <button id="add-row" class="btn">Ajouter une matière</button>
-      <button id="clear-all" class="btn btn-quiet">Tout effacer</button>
-    </div>
-  </section>
-
-  <aside class="col-side">
-    <div class="side-sticky">
-    <div class="card readout">
-      <p class="card-label">Moyenne actuelle</p>
-      <p class="readout-value is-empty" id="average" aria-live="polite">0,00</p>
-      <p class="readout-meta" id="average-meta">Aucune note saisie</p>
-      <p class="mention" id="mention" hidden></p>
-    </div>
-
-    <div class="card">
-      <label class="field-label" for="target">Objectif de moyenne</label>
-      <div class="field-row">
-        <input type="number" id="target" step="0.1" min="0" max="20" inputmode="decimal">
-        <span class="field-unit">/ 20</span>
+    <section class="col-main" aria-labelledby="h-matieres">
+      <div class="section-head">
+        <h1 id="h-matieres">Tes matières</h1>
+        <p class="lede">Renseigne une note sur 20 et un coefficient par matière. Coche « à venir » pour les épreuves que
+          tu n'as pas encore passées.</p>
       </div>
-      <div class="ecart-field">
-        <div class="ecart-head">
-          <label class="field-label" for="ecart">Écart pour les matières ★</label>
-          <output class="ecart-value" id="ecart-value" for="ecart">+0</output>
+
+      <div class="table-wrap">
+        <table id="rows">
+          <thead>
+            <tr>
+              <th scope="col" class="c-name">Matière</th>
+              <th scope="col" class="c-num">Coef</th>
+              <th scope="col" class="c-num">Note /20</th>
+              <th scope="col" class="c-flag">À venir</th>
+              <th scope="col" class="c-del"><span class="sr-only">Supprimer</span></th>
+            </tr>
+          </thead>
+          <tbody id="rows-body"></tbody>
+        </table>
+
+        <p class="empty" id="empty-state" hidden>
+          Aucune matière pour l'instant.<br>
+          Ajoute-les une par une, ou charge la grille officielle du bac 2027 plus bas.
+        </p>
+      </div>
+
+      <div class="row-actions">
+        <button id="add-row" class="btn">Ajouter une matière</button>
+        <button id="clear-all" class="btn btn-quiet">Tout effacer</button>
+      </div>
+    </section>
+
+    <aside class="col-side">
+      <div class="side-sticky">
+        <div class="card readout">
+          <p class="card-label">Moyenne actuelle</p>
+          <p class="readout-value is-empty" id="average" aria-live="polite">0,00</p>
+          <p class="readout-meta" id="average-meta">Aucune note saisie</p>
+          <p class="mention" id="mention" hidden></p>
         </div>
-        <input type="range" id="ecart" min="0" max="5" step="0.5" value="0">
-      </div>
-      <p class="field-help">Sur 20, recalculé à chaque saisie. Les matières «&nbsp;à venir&nbsp;» ont toutes la même note, sauf celles marquées&nbsp;★&nbsp;: elles visent l'écart choisi en plus, sans dépasser 20.</p>
-      <p class="field-result" id="target-result" role="status"></p>
-    </div>
-    </div>
-  </aside>
 
-  <section class="col-full" aria-labelledby="h-coef">
-    <div class="section-head">
-      <h2 id="h-coef">Coefficients du bac 2027</h2>
-      <p class="lede">Voie générale, sur un total de <span id="coef-total-all">100</span>. Vérifie auprès de ton lycée si tu as des options ou un parcours particulier.</p>
-    </div>
-
-    <div class="coef-groups">
-      <div class="coef-group">
-        <div class="coef-group-head">
-          <h3>Épreuves finales</h3>
-          <span class="coef-total" id="total-finales">60</span>
+        <div class="card">
+          <label class="field-label" for="target">Objectif de moyenne</label>
+          <div class="field-row">
+            <input type="number" id="target" step="0.1" min="0" max="20" inputmode="decimal">
+            <span class="field-unit">/ 20</span>
+          </div>
+          <div class="ecart-field">
+            <div class="ecart-head">
+              <label class="field-label" for="ecart">Écart pour les matières ★</label>
+              <output class="ecart-value" id="ecart-value" for="ecart">+0</output>
+            </div>
+            <input type="range" id="ecart" min="0" max="5" step="0.5" value="0">
+          </div>
+          <p class="field-help">Sur 20, recalculé à chaque saisie. Les matières «&nbsp;à venir&nbsp;» ont toutes la même
+            note, sauf celles marquées&nbsp;★&nbsp;: elles visent l'écart choisi en plus, sans dépasser 20.</p>
+          <p class="field-result" id="target-result" role="status"></p>
         </div>
-        <ul class="coef-list" id="coef-finales"></ul>
+      </div>
+    </aside>
+
+    <section class="col-full" aria-labelledby="h-coef">
+      <div class="section-head">
+        <h2 id="h-coef">Coefficients du bac 2027</h2>
+        <p class="lede">Voie générale, sur un total de <span id="coef-total-all">100</span>. Vérifie auprès de ton lycée
+          si tu as des options ou un parcours particulier.</p>
       </div>
 
-      <div class="coef-group">
-        <div class="coef-group-head">
-          <h3>Contrôle continu</h3>
-          <span class="coef-total" id="total-continu">40</span>
+      <div class="coef-groups">
+        <div class="coef-group">
+          <div class="coef-group-head">
+            <h3>Épreuves finales</h3>
+            <span class="coef-total" id="total-finales">60</span>
+          </div>
+          <ul class="coef-list" id="coef-finales"></ul>
         </div>
-        <ul class="coef-list" id="coef-continu"></ul>
+
+        <div class="coef-group">
+          <div class="coef-group-head">
+            <h3>Contrôle continu</h3>
+            <span class="coef-total" id="total-continu">40</span>
+          </div>
+          <ul class="coef-list" id="coef-continu"></ul>
+        </div>
       </div>
-    </div>
 
-    <div class="coef-actions">
-      <button id="prefill" class="btn btn-primary">Charger cette grille dans le tableau</button>
-      <p class="field-help">Remplace les matières actuelles. Les options facultatives comptent coefficient 2 chacune, en plus des 100.</p>
-    </div>
-  </section>
+      <div class="coef-actions">
+        <button id="prefill" class="btn btn-primary">Charger cette grille dans le tableau</button>
+        <p class="field-help">Remplace les matières actuelles. Les options facultatives comptent coefficient 2 chacune,
+          en plus des 100.</p>
+      </div>
+    </section>
 
-</main>
+  </main>
 
-<footer class="pied">
-  <a href="https://dunandchatellet.fr/">← dunandchatellet.fr</a>
-  <a href="https://dunandchatellet.fr/mentions-legales.html">Mentions légales</a>
-</footer>
+  <footer class="pied">
+    <a href="https://dunandchatellet.fr/">← dunandchatellet.fr</a>
+    <a href="https://dunandchatellet.fr/mentions-legales.html">Mentions légales</a>
+  </footer>
 
-<script src="script.js?v=20260919-3"></script>
+  <script src="script.js?v=20260919-3"></script>
 </body>
+
 </html>

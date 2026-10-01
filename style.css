@@ -1,33 +1,39 @@
+/* Simulateur de moyenne — même famille que le portfolio (direction « Atelier ») :
+   papier / encre, titres en Syne, texte en Geist, étiquettes et chiffres en mono, filets fins.
+   Seule la couleur d'accent lui est propre (terracotta). Le thème suit le réglage de l'appareil. */
+
 :root {
-  --bg: #f2f3f5;
-  --surface: #ffffff;
-  --surface-2: #f7f8f9;
-  --text: #16181d;
-  --text-soft: #5b616e;
-  --line: #dfe2e7;
-  --line-strong: #c7ccd4;
+  --bg: #e7e2d7;             /* papier */
+  --surface: #f0ece3;        /* champs et cartes, un ton plus clair que le papier */
+  --surface-2: #ded8ca;      /* en-tête du tableau */
+  --text: #16130f;           /* encre */
+  --text-soft: #57503f;
+  --line: rgba(22, 19, 15, 0.16);
+  --line-strong: rgba(22, 19, 15, 0.5);
   --accent: #b4552b;
-  --accent-soft: #f6ece6;
-  --accent-text: #8f4322;
+  --accent-soft: #e5d3c3;
+  --accent-text: #8f4322;    /* terracotta foncé : 6:1 sur le papier, pour le texte */
   --bad: #9c2f2f;
-  --radius: 4px;
-  --shadow: 0 1px 2px rgba(22, 24, 29, 0.05);
+  --radius: 2px;
+
+  --f-display: 'Syne', 'Helvetica Neue', Arial, sans-serif;
+  --f-text: 'Geist', system-ui, sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #14161a;
-    --surface: #1b1e23;
-    --surface-2: #212429;
-    --text: #e8eaee;
-    --text-soft: #9aa1ad;
-    --line: #2b2f36;
-    --line-strong: #3a3f48;
+    --bg: #100e0c;           /* nuit — encre */
+    --surface: #1a1714;
+    --surface-2: #231f1b;
+    --text: #ece5d8;
+    --text-soft: #9a9184;
+    --line: rgba(236, 229, 216, 0.16);
+    --line-strong: rgba(236, 229, 216, 0.45);
     --accent: #d97a4e;
     --accent-soft: #2a2019;
     --accent-text: #e79468;
     --bad: #e07a72;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   }
 }
 
@@ -39,9 +45,9 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: 'Geist', system-ui, sans-serif;
+  font-family: var(--f-text);
   font-size: 15px;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
 .sr-only {
@@ -54,25 +60,36 @@ body {
   border: 0;
 }
 
-/* Topbar */
+/* Barre du haut : le monogramme ramène au portfolio */
 
 .topbar {
   height: 64px;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 14px;
   padding: 0 24px;
-  border-bottom: 1px solid var(--line);
-  background: var(--surface);
+  border-bottom: 2px solid var(--text);
+  background: var(--bg);
 }
+
+.brand {
+  display: block;
+  line-height: 0;
+  position: relative;
+}
+.brand img { display: block; border-radius: 7px; }
+/* zone de clic de 44 px sans agrandir le monogramme */
+.brand::after { content: ""; position: absolute; inset: -7px; }
 
 .topbar-title {
-  font-weight: 600;
-  font-size: 14px;
-  color: var(--text-soft);
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-/* Layout: asymmetric two-column, table left, results right */
+/* Disposition asymétrique : tableau à gauche, résultats à droite */
 
 .layout {
   max-width: 1080px;
@@ -90,27 +107,29 @@ body {
 
 h1, h2, h3 {
   margin: 0;
-  font-weight: 600;
-  letter-spacing: -0.015em;
+  font-family: var(--f-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  line-height: 1.05;
 }
-h1 { font-size: 26px; }
-h2 { font-size: 22px; }
-h3 { font-size: 15px; }
+h1 { font-size: 30px; }
+h2 { font-size: 24px; }
+h3 { font-size: 14px; letter-spacing: 0.02em; }
 
 .lede {
-  margin: 6px 0 0;
+  margin: 10px 0 0;
   color: var(--text-soft);
-  font-size: 14px;
+  font-size: 15px;
   max-width: 58ch;
 }
 
-/* Table */
+/* Tableau */
 
 .table-wrap {
   background: var(--surface);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
   overflow: hidden;
 }
 
@@ -121,12 +140,15 @@ table {
 
 thead th {
   text-align: left;
-  font-size: 12px;
-  font-weight: 500;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--text-soft);
   padding: 12px 10px;
   background: var(--surface-2);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--line-strong);
 }
 
 .c-num, .c-flag, .c-del { text-align: center; width: 1%; white-space: nowrap; }
@@ -147,14 +169,14 @@ tbody tr:last-child td { border-bottom: 0; }
   line-height: 1.7;
 }
 
-/* Fields */
+/* Champs */
 
 input[type="text"],
 input[type="number"] {
   font-family: inherit;
   font-size: 14px;
   color: var(--text);
-  background: var(--surface);
+  background: var(--bg);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius);
   padding: 7px 9px;
@@ -162,7 +184,7 @@ input[type="number"] {
   width: 100%;
 }
 input[type="number"] {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--f-mono);
   text-align: center;
   width: 74px;
 }
@@ -213,7 +235,7 @@ input[type="range"]::-webkit-slider-thumb {
   margin-top: -7px; /* centre le curseur sur la piste de 4px */
   border-radius: 50%;
   background: var(--accent);
-  border: 2px solid var(--surface);
+  border: 2px solid var(--bg);
   box-shadow: 0 0 0 1px var(--accent);
 }
 input[type="range"]::-moz-range-track {
@@ -231,14 +253,14 @@ input[type="range"]::-moz-range-thumb {
   height: 14px;
   border-radius: 50%;
   background: var(--accent);
-  border: 2px solid var(--surface);
+  border: 2px solid var(--bg);
   box-shadow: 0 0 0 1px var(--accent);
 }
 input[type="range"]:focus-visible { box-shadow: none; }
 
 /* Note pas encore saisie : curseur creux au milieu, piste vide */
-input[type="range"].is-unset::-webkit-slider-thumb { background: var(--surface); box-shadow: 0 0 0 1.5px var(--text-soft); }
-input[type="range"].is-unset::-moz-range-thumb { background: var(--surface); box-shadow: 0 0 0 1.5px var(--text-soft); }
+input[type="range"].is-unset::-webkit-slider-thumb { background: var(--bg); box-shadow: 0 0 0 1.5px var(--text-soft); }
+input[type="range"].is-unset::-moz-range-thumb { background: var(--bg); box-shadow: 0 0 0 1.5px var(--text-soft); }
 input[type="range"].is-unset::-moz-range-progress { background: transparent; }
 
 input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -286,20 +308,23 @@ input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
 .del-btn:hover { color: var(--bad); border-color: var(--line-strong); }
 .del-btn:active { transform: scale(0.94); }
 
-/* Buttons */
+/* Boutons : pastilles, comme sur le portfolio */
 
 .btn {
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 500;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--text);
-  background: var(--surface);
+  background: none;
   border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
-  padding: 9px 16px;
+  border-radius: 999px;
+  padding: 10px 18px;
   cursor: pointer;
+  transition: background-color 0.25s, color 0.25s, border-color 0.25s;
 }
-.btn:hover { border-color: var(--text-soft); }
+.btn:hover { background: var(--text); border-color: var(--text); color: var(--bg); }
 .btn:active { transform: translateY(1px); }
 .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
@@ -308,14 +333,14 @@ input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
   border-color: var(--accent);
   color: #ffffff;
 }
-.btn-primary:hover { background: var(--accent-text); border-color: var(--accent-text); }
+.btn-primary:hover { background: var(--accent-text); border-color: var(--accent-text); color: #ffffff; }
 
 .btn-quiet {
   background: none;
   border-color: transparent;
   color: var(--text-soft);
 }
-.btn-quiet:hover { color: var(--bad); border-color: var(--line-strong); }
+.btn-quiet:hover { background: none; color: var(--bad); border-color: var(--line-strong); }
 
 .row-actions {
   display: flex;
@@ -323,7 +348,7 @@ input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
   margin-top: 14px;
 }
 
-/* Side column */
+/* Colonne de droite */
 
 /* La colonne s'étire sur la hauteur du tableau et c'est son contenu qui
    reste collé : il s'arrête ainsi à la fin du tableau au lieu de glisser
@@ -338,21 +363,23 @@ input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .card {
   background: var(--surface);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
   padding: 20px;
 }
 
 .card-label {
   margin: 0;
-  font-size: 13px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--text-soft);
 }
 
 .readout-value {
-  margin: 4px 0 0;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  margin: 6px 0 0;
+  font-family: var(--f-mono);
   font-size: 46px;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
@@ -369,20 +396,27 @@ input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
 }
 
 .mention {
+  display: inline-block;
   margin: 12px 0 0;
-  padding: 7px 10px;
+  padding: 6px 14px;
   background: var(--accent-soft);
   color: var(--accent-text);
-  border-radius: var(--radius);
-  font-size: 13px;
-  font-weight: 500;
+  border-radius: 999px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
+.mention[hidden] { display: none; }
 
 .field-label {
   display: block;
-  font-size: 13px;
-  font-weight: 500;
-  margin-bottom: 6px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 8px;
 }
 
 .field-row {
@@ -392,18 +426,18 @@ input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
 .field-row input { width: 92px; flex: 0 0 auto; }
 .field-unit {
   align-self: center;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--f-mono);
   font-size: 13px;
   color: var(--text-soft);
 }
 
 .field-help {
-  margin: 8px 0 0;
-  font-size: 12.5px;
+  margin: 10px 0 0;
+  font-size: 13px;
   color: var(--text-soft);
 }
 
-.ecart-field { margin-top: 16px; }
+.ecart-field { margin-top: 18px; }
 .ecart-head {
   display: flex;
   align-items: baseline;
@@ -412,7 +446,7 @@ input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
 }
 .ecart-head .field-label { margin-bottom: 0; }
 .ecart-value {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--f-mono);
   font-size: 13px;
   font-weight: 600;
   color: var(--accent-text);
@@ -424,11 +458,11 @@ input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
   font-size: 14px;
   min-height: 1px;
 }
-.field-result strong { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+.field-result strong { font-family: var(--f-mono); }
 .field-result.is-bad { color: var(--bad); }
 .field-result.is-ok { color: var(--accent-text); }
 
-/* Coefficients reference */
+/* Coefficients du bac */
 
 .coef-groups {
   display: grid;
@@ -438,9 +472,8 @@ input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .coef-group {
   background: var(--surface);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
   padding: 20px;
 }
 
@@ -450,13 +483,14 @@ input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
   justify-content: space-between;
   gap: 12px;
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--line-strong);
 }
 
 .coef-total {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 24px;
+  font-family: var(--f-display);
+  font-size: 34px;
   font-weight: 800;
+  line-height: 1;
   color: var(--accent-text);
   font-variant-numeric: tabular-nums;
 }
@@ -476,7 +510,7 @@ input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
   font-size: 14px;
 }
 .coef-list .coef-val {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--f-mono);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   color: var(--text-soft);
@@ -490,7 +524,7 @@ input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
 .coef-actions { margin-top: 16px; }
 .coef-actions .field-help { max-width: 60ch; }
 
-/* Responsive */
+/* Adaptation aux petits écrans */
 
 @media (max-width: 860px) {
   .layout {
@@ -503,6 +537,7 @@ input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
 }
 
 @media (max-width: 560px) {
+  .topbar { padding: 0 16px; }
   thead { display: none; }
   /* Carte par matière : nom, puis coef + « à venir », puis la note
      avec son curseur sur toute la largeur (plus facile au pouce). */
@@ -529,7 +564,10 @@ input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
   .f-note-range::-moz-range-thumb { width: 20px; height: 20px; }
   .star-btn { width: 36px; height: 36px; margin-left: 4px; }
   .cell-label {
-    font-size: 12px;
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: var(--text-soft);
     display: block;
     margin-bottom: 2px;
@@ -562,11 +600,14 @@ input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
   display: flex;
   flex-wrap: wrap;
   gap: 8px 24px;
-  font-size: 13px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 .pied a {
   color: var(--text-soft);
   text-underline-offset: 3px;
-  padding: 4px 0;
+  padding: 7px 0;
 }
-.pied a:hover { color: var(--accent); }
+.pied a:hover { color: var(--accent-text); }
