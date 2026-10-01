@@ -178,8 +178,10 @@ input:disabled {
 }
 
 input[type="checkbox"] {
-  width: 17px;
-  height: 17px;
+  width: 24px;      /* cible tactile d'au moins 24 px (WCAG 2.5.8) */
+  height: 24px;
+  min-width: 24px;
+  flex-shrink: 0;
   accent-color: var(--accent);
   cursor: pointer;
 }
@@ -550,3 +552,21 @@ input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
+
+/* Pied de page : retour au portfolio et mentions légales (le simulateur garde vos notes dans le
+   navigateur, voir mentions légales). */
+.pied {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px 48px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  font-size: 13px;
+}
+.pied a {
+  color: var(--text-soft);
+  text-underline-offset: 3px;
+  padding: 4px 0;
+}
+.pied a:hover { color: var(--accent); }
