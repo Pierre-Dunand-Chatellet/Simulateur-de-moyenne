@@ -1,39 +1,41 @@
-/* Simulateur de moyenne — même famille que le portfolio (direction « Atelier ») :
-   papier / encre, titres en Syne, texte en Geist, étiquettes et chiffres en mono, filets fins.
-   Seule la couleur d'accent lui est propre (terracotta). Le thème suit le réglage de l'appareil. */
+/* Simulateur de moyenne, identité « bulletin scolaire » (2026-11-15) : la page se lit comme un
+   bulletin de notes. Fond papier clair, tableau à en-tête bleu marine, moyenne en grand dans un
+   encadré marine. Texte en Schibsted Grotesk, la police du portfolio. Le thème suit l'appareil. */
 
 :root {
-  --bg: #e7e2d7;             /* papier */
-  --surface: #f0ece3;        /* champs et cartes, un ton plus clair que le papier */
-  --surface-2: #ded8ca;      /* en-tête du tableau */
-  --text: #16130f;           /* encre */
-  --text-soft: #57503f;
-  --line: rgba(22, 19, 15, 0.16);
-  --line-strong: rgba(22, 19, 15, 0.5);
-  --accent: #b4552b;
-  --accent-soft: #e5d3c3;
-  --accent-text: #8f4322;    /* terracotta foncé : 6:1 sur le papier, pour le texte */
-  --bad: #9c2f2f;
-  --radius: 2px;
+  --bg: #f4f2ee;
+  --surface: #ffffff;
+  --surface-2: #e9eef4;
+  --text: #1d1f24;
+  --text-soft: #4f545e;      /* 7,4:1 sur le fond */
+  --line: rgba(29, 31, 36, 0.14);
+  --line-strong: rgba(29, 31, 36, 0.45);
+  --accent: #1f4e79;         /* bleu marine du bulletin : blanc dessus 8,9:1 */
+  --accent-soft: #dde7f2;
+  --accent-text: #1f4e79;
+  --sur-accent: #ffffff;
+  --bad: #a12a2a;
+  --radius: 6px;
 
-  --f-display: 'Syne', 'Helvetica Neue', Arial, sans-serif;
-  --f-text: 'Geist', system-ui, sans-serif;
-  --f-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --f-display: 'Schibsted Grotesk', system-ui, sans-serif;
+  --f-text: 'Schibsted Grotesk', system-ui, sans-serif;
+  --f-mono: 'Schibsted Grotesk', system-ui, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #100e0c;           /* nuit — encre */
-    --surface: #1a1714;
-    --surface-2: #231f1b;
-    --text: #ece5d8;
-    --text-soft: #9a9184;
-    --line: rgba(236, 229, 216, 0.16);
-    --line-strong: rgba(236, 229, 216, 0.45);
-    --accent: #d97a4e;
-    --accent-soft: #2a2019;
-    --accent-text: #e79468;
-    --bad: #e07a72;
+    --bg: #12161c;
+    --surface: #1a2029;
+    --surface-2: #222a35;
+    --text: #e8eaee;
+    --text-soft: #a9afba;
+    --line: rgba(232, 234, 238, 0.14);
+    --line-strong: rgba(232, 234, 238, 0.45);
+    --accent: #8db8e6;       /* bleu clair : texte sombre dessus 8,6:1 */
+    --accent-soft: #1d3147;
+    --accent-text: #8db8e6;
+    --sur-accent: #12161c;
+    --bad: #f08a80;
   }
 }
 
@@ -609,3 +611,37 @@ input[type="range"]:disabled { opacity: 0.4; cursor: not-allowed; }
   padding: 7px 0;
 }
 .pied a:hover { color: var(--accent-text); }
+
+/* ===== Bulletin scolaire (2026-11-15) =====
+   Plus de petites capitales espacées : étiquettes et boutons en phrase normale.
+   Les chiffres restent alignés (tabular-nums) sans police mono. */
+.topbar-title, h1, h2, h3, thead th, .btn, .card-label, .mention, .field-label, .pied, .cell-label {
+  text-transform: none; letter-spacing: 0;
+}
+.topbar { background: var(--surface); border-bottom: 3px solid var(--accent); }
+.topbar-title { font-weight: 800; font-size: 17px; }
+h1, h2 { font-weight: 900; letter-spacing: -0.02em; }
+h1 { font-size: 34px; }
+h2 { font-size: 26px; }
+h3 { font-size: 16px; font-weight: 800; }
+input[type="number"], .ecart-value, .coef-val { font-variant-numeric: tabular-nums; }
+.readout-value, .field-result strong, .coef-total { font-variant-numeric: normal; font-feature-settings: normal; }
+thead th { background: var(--accent); color: var(--sur-accent); font-size: 13px; font-weight: 700; }
+.card-label, .field-label { font-size: 14px; font-weight: 700; color: var(--text); }
+.cell-label { font-size: 12px; font-weight: 600; }
+.btn { font-size: 15px; font-weight: 700; border-radius: 8px; }
+.btn:active { transform: scale(0.97); }
+.btn-primary { color: var(--sur-accent); }
+.btn-primary:hover { background: var(--text); border-color: var(--text); color: var(--bg); }
+.mention { font-size: 13px; font-weight: 700; border-radius: 6px; }
+/* La moyenne : l'encadré marine du bulletin. */
+.card.readout { background: var(--accent); border-color: var(--accent); color: var(--sur-accent); }
+.card.readout .card-label, .card.readout .readout-meta { color: var(--sur-accent); }
+.card.readout .readout-value { font-weight: 900; color: var(--sur-accent); }
+.card.readout .readout-value.is-empty { opacity: .55; color: var(--sur-accent); }
+.card.readout .mention { background: var(--sur-accent); color: var(--accent); }
+.coef-total { font-weight: 900; }
+.pied { font-size: 14px; }
+.pied .auteur { display: inline-flex; align-items: center; gap: 8px; color: var(--text); font-weight: 600; }
+.pied .auteur svg { width: 18px; height: 18px; }
+@media (prefers-reduced-motion: reduce) { .btn:active { transform: none; } }
